@@ -10,6 +10,7 @@
         - unzip
         - pkg-config
         - gcc
+        - libc6-dev
       state: present
       update_cache: yes
 
