@@ -1,0 +1,54 @@
+---
+# tasks file for redis_installer
+
+  - name: Install prerequisites
+    apt:
+      pkg:
+        - make
+        - wget
+        - tar
+        - unzip
+        - pkg-config
+        - gcc
+      state: present
+      update_cache: yes
+
+  - name: Download redis source code
+    get_url:
+      url: "https://download.redis.io/releases/redis-{{ redis_version }}.tar.gz"
+      dest: /tmp
+
+  - name: Extract redis source code
+    unarchive:
+      src: "/tmp/redis-{{ redis_version }}.tar.gz"
+      dest: /tmp
+      remote_src: yes
+
+  - name: Build redis from source
+    make:
+      chdir: "/tmp/redis-{{ redis_version }}/deps"
+      target: hiredis
+
+  - name: Build redis from source
+    make:
+      chdir: "/tmp/redis-{{ redis_version }}/deps"
+      target: lua
+
+  - name: Build redis from source
+    make:
+      chdir: "/tmp/redis-{{ redis_version }}/deps"
+      target: jemalloc
+
+  - name: Build redis from source
+    make:
+      chdir: "/tmp/redis-{{ redis_version }}/deps"
+      target: linenoise
+
+  - name: Build redis from source
+    make:
+      chdir: "/tmp/redis-{{ redis_version }}"
+
+  - name: Build redis from source
+    make:
+      chdir: "/tmp/redis-{{ redis_version }}"
+      target: install
